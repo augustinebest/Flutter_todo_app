@@ -13,33 +13,35 @@ class TodosProvider extends ChangeNotifier {
     ),
     Todo(
       createdTime: DateTime.now(),
-      title: 'Visit the clinic1 ',
-    ),
-    Todo(
-      createdTime: DateTime.now(),
-      title: 'Visit the clinic2 ',
-    ),
-    Todo(
-      createdTime: DateTime.now(),
-      title: 'Visit the clinic3 ',
-    ),
-    Todo(
-      createdTime: DateTime.now(),
-      title: 'Visit the clinic4 ',
-    ),
-    Todo(
-      createdTime: DateTime.now(),
-      title: 'Visit the clinic5 ',
-    ),
-    Todo(
-      createdTime: DateTime.now(),
-      title: 'Visit the clinic6 ',
-    ),
-    Todo(
-      createdTime: DateTime.now(),
-      title: 'Visit the clinic7 ',
+      title: 'Visit the clinic',
     ),
   ];
 
   List<Todo> get todos => _todos.where((todo) => todo.isDone == false).toList();
+
+  List<Todo> get taskCompleted =>
+      _todos.where((todo) => todo.isDone == true).toList();
+
+  void addTodo(Todo todo) {
+    _todos.add(todo);
+    notifyListeners();
+  }
+
+  void removeTodo(Todo todo) {
+    _todos.remove(todo);
+    notifyListeners();
+  }
+
+  bool toggleTodoStatus(Todo todo) {
+    todo.isDone = !todo.isDone;
+    notifyListeners();
+
+    return todo.isDone;
+  }
+
+  void updateTodo(Todo todo, String title, String description) {
+    todo.title = title;
+    todo.description = description;
+    notifyListeners();
+  }
 }
